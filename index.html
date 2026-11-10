@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fff9e7">
+<title>Игровая мастерская · Креайтивика</title>
+<style>
+:root {
+  --ink: #202421; --soft: #4b514b; --cream: #fff9e7; --paper: #fffefa;
+  --lime: #e6f34c; --gold: #ffbd46; --violet: #eee5fa; --green: #def0cf;
+  --line: #d7d8cb; --shadow: 4px 5px 0 var(--ink);
+  color: var(--ink); background: var(--cream); font-family: 'Segoe UI', Arial, sans-serif;
+  font-synthesis: none;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-size: 18px; line-height: 1.5; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:disabled { cursor: default; }
+button:focus-visible, select:focus-visible, a:focus-visible, input:focus-visible {
+  outline: 3px solid #6543a0; outline-offset: 4px;
+}
+[hidden] { display: none !important; }
+h1, h2, h3, p { margin: 0; }
+h1, h2 { line-height: 1.08; letter-spacing: -.04em; }
+h2 { font-size: clamp(2rem, 5vw, 3.15rem); }
+header { border-bottom: 1px solid #d8d4c3; background: var(--paper); }
+.wrap { width: min(1080px, 100% - 40px); margin: 0 auto; }
+.brandbar { min-height: 69px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 850; letter-spacing: -.045em; font-size: clamp(1.05rem, 4vw, 1.35rem); }
+.brand i { width: 25px; height: 25px; display: block; background: var(--lime); border: 2px solid; border-radius: 6px; transform: rotate(-12deg); position: relative; }
+.brand i::after { position: absolute; content: ''; width: 9px; height: 9px; background: var(--ink); inset: 6px; clip-path: polygon(0 0, 100% 45%, 0 100%); }
+.course, .tag { font-size: .75rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+.course { white-space: nowrap; background: var(--green); border: 1px solid; border-radius: 999px; padding: 5px 11px; }
+main { padding-block: 32px 28px; }
+.hero, .panel { border: 2px solid var(--ink); border-radius: 25px; box-shadow: var(--shadow); overflow: hidden; }
+.hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); background: var(--lime); min-height: 475px; }
+.hero-copy { padding: clamp(22px, 4vw, 55px); align-self: center; }
+.hero h1 { font-size: clamp(3rem, 7.1vw, 5.55rem); margin: 15px 0 16px; }
+.hero p { max-width: 36ch; margin-bottom: 20px; font-size: 1.09em; }
+.hero-art {
+  background: var(--ink); color: var(--lime); min-width: 0; display: grid; align-items: center; justify-items: center; position: relative;
+  background-image: radial-gradient(#595d55 1px, transparent 1px); background-size: 18px 18px;
+}
+.hero-art svg { width: min(100%, 440px); height: auto; }
+.hero-art small { position: absolute; bottom: 14px; right: 17px; font-size: .68rem; letter-spacing: .12em; font-weight: 800; }
+.button {
+  border: 2px solid var(--ink); border-radius: 12px; padding: 10px 17px; min-height: 49px;
+  font-weight: 750; background: var(--paper); box-shadow: 2px 3px 0 var(--ink);
+}
+.button:hover:not(:disabled) { transform: translateY(-2px); }
+.button:active:not(:disabled) { transform: translate(1px, 2px); box-shadow: 0 1px 0 var(--ink); }
+.button:disabled { opacity: .6; box-shadow: none; }
+.primary { background: var(--ink); color: white; box-shadow: 2px 3px 0 #777c6b; }
+.accent { background: var(--lime); }
+.subtle { box-shadow: none; border-color: var(--line); }
+.quiet { background: transparent; border: 0; color: var(--soft); min-height: 44px; text-decoration: underline; text-underline-offset: .2em; }
+.meta { display: flex; flex-wrap: wrap; gap: 5px 12px; margin-top: 16px; color: #303929; font-size: .82rem; }
+.meta span { display: inline-flex; gap: 5px; align-items: center; }
+.meta span::before { content: '●'; font-size: .52em; }
+.work { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 24px; align-items: start; }
+.rail { padding: 17px; background: #f4eedc; border: 1px solid #d6d2be; border-radius: 18px; }
+.rail p { font-size: .86rem; color: var(--soft); margin-top: 10px; }
+progress { width: 100%; height: 11px; margin: 6px 0 12px; accent-color: #58833c; }
+.steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.step { padding: 0; min-height: 36px; border: 1px solid #aaa998; border-radius: 8px; background: white; font-size: .89rem; font-weight: 750; }
+.step.done { background: var(--green); }
+.step[aria-current="step"] { background: var(--gold); border: 2px solid; }
+.panel { background: var(--paper); }
+.panel-head { padding: clamp(20px, 4vw, 37px); padding-bottom: 19px; }
+.panel-head .tag { display: inline-flex; align-items: center; gap: 9px; margin-bottom: 12px; }
+.panel-head .tag::before { content: ''; width: 11px; height: 11px; background: var(--gold); border: 1px solid; transform: rotate(12deg); }
+.lead { margin-top: 13px; font-size: 1.1rem; }
+.activity { padding: 0 clamp(20px, 4vw, 37px) 22px; }
+.hint { font-size: .92rem; color: var(--soft); margin-bottom: 13px; }
+.choices { display: grid; gap: 8px; }
+.choice, .token, .zone, .square, .move {
+  background: white; border: 1.5px solid #a4a89b; border-radius: 12px; padding: 10px 12px; min-height: 48px;
+}
+.choice { display: flex; align-items: center; gap: 12px; text-align: left; font-weight: 650; }
+.choice span.mark { display: grid; place-items: center; border: 1.5px solid #74786d; min-width: 24px; height: 24px; border-radius: 50%; background: var(--paper); font-size: .85rem; }
+.choice.multi span.mark { border-radius: 6px; }
+.choice[aria-pressed="true"], .token[aria-pressed="true"], .square[aria-pressed="true"], .scene [aria-pressed="true"] { background: var(--lime); border-color: var(--ink); }
+.choice.block { background: var(--violet); border-color: #79669a; }
+.choice.block[aria-pressed="true"] { background: #dacef5; border-color: #3d2b68; }
+.choice.block span.mark { border-color: #79669a; }
+.choice:hover:not(:disabled), .token:hover:not(:disabled), .zone:hover:not(:disabled), .square:hover:not(:disabled) { border-color: var(--ink); }
+.bank { min-height: 67px; background: #f4eedc; border-radius: 14px; padding: 9px; display: flex; flex-wrap: wrap; gap: 7px; align-items: center; margin-bottom: 11px; }
+.token { font-weight: 700; cursor: grab; }
+.token:active { cursor: grabbing; }
+.bins { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+.bin { min-height: 139px; padding: 8px; border: 2px dashed #9da887; background: #f4fae9; border-radius: 14px; }
+.bin:nth-child(2) { border-color: #c4a670; background: #fff4d8; }
+.zone { width: 100%; font-weight: 760; margin-bottom: 7px; background: var(--paper); border-color: currentColor; }
+.bin .tokens { display: flex; flex-wrap: wrap; gap: 6px; }
+.bin .token { font-size: .92rem; }
+.over { outline: 3px solid #6543a0; outline-offset: 2px; }
+.matches { display: grid; gap: 8px; }
+.match { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 10px; align-items: center; padding: 8px; border-radius: 12px; background: #f2f4e9; }
+.match span { font-weight: 650; padding-left: 4px; }
+select { color: var(--ink); font: inherit; width: 100%; min-width: 0; padding: 8px 4px 8px 9px; min-height: 48px; border: 1.5px solid #a4a89b; border-radius: 10px; background: white; }
+.map { display: grid; grid-template-columns: 44px repeat(3, minmax(54px, 1fr)); gap: 5px; max-width: 460px; text-align: center; align-items: center; }
+.axis { font-size: .85rem; font-weight: 800; }
+.square { padding: 0; min-height: 56px; font-weight: 750; }
+.square.start { background: var(--violet); }
+.square.start[aria-pressed="true"] { background: var(--lime); }
+.board-count { display: flex; gap: 8px; align-items: center; }
+.board-count output { min-width: 76px; padding: 5px 10px; text-align: center; font-size: 2rem; font-weight: 850; background: #fff0ca; border: 2px solid; border-radius: 11px; }
+.sort { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.sort li { display: grid; grid-template-columns: 26px minmax(0, 1fr) 44px 44px; gap: 6px; align-items: center; border: 1.5px solid #a4a89b; border-radius: 12px; padding: 7px 8px; background: #f2f6e8; }
+.sort li[draggable="true"] { cursor: grab; }
+.sort li:active { cursor: grabbing; }
+.sort b { font-size: .89rem; color: var(--soft); text-align: center; }
+.move { padding: 0; min-height: 42px; font-size: 1.15rem; }
+.move:disabled { opacity: .45; }
+.scene { max-width: 465px; background: #292e35; border: 2px solid #202421; border-radius: 14px; padding: 12px; display: grid; gap: 10px; }
+.scene .zone { margin: 0; border-radius: 8px; }
+.scene figure { margin: 0; min-height: 70px; display: grid; place-items: center; color: white; }
+.scene svg { width: 66px; height: 62px; }
+.feedback { border: 1px solid #c6b794; border-radius: 13px; background: #fff1d0; padding: 10px 13px; margin-top: 14px; }
+.feedback.good { border-color: #a9c797; background: var(--green); }
+.feedback strong { display: block; }
+.controls { border-top: 1px solid #deded0; background: #f8f6ec; padding: 13px clamp(20px, 4vw, 37px) 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.controls .next { margin-left: auto; }
+.results { max-width: 870px; margin: auto; }
+.results .activity { display: grid; gap: 17px; }
+.result-lead { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.score { display: inline-block; background: var(--lime); border: 2px solid; border-radius: 13px; font-size: 2rem; font-weight: 850; min-width: 112px; text-align: center; }
+.review { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+.review .button { text-align: left; font-size: .9rem; }
+.review .button.done { background: var(--green); }
+.self { border-top: 1px solid var(--line); padding-top: 14px; }
+.self h3 { margin-bottom: 4px; }
+.self p { margin-bottom: 9px; }
+.self .choice { width: 100%; }
+footer { padding: 0 0 22px; color: var(--soft); font-size: .84rem; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 14px; }
+footer button { font-size: inherit; }
+dialog { max-width: min(440px, 100% - 36px); border: 2px solid; border-radius: 17px; background: var(--paper); padding: 22px; color: var(--ink); }
+dialog::backdrop { background: #20242199; }
+dialog p { margin: 9px 0 16px; }
+dialog form { display: flex; flex-wrap: wrap; gap: 8px; }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 760px) {
+  .work { grid-template-columns: minmax(0, 1fr); gap: 13px; }
+  .rail { padding: 9px 13px 11px; }
+  .rail p { display: none; }
+  .steps { grid-template-columns: repeat(10, 1fr); gap: 4px; }
+  .step { min-height: 32px; }
+  progress { margin: 3px 0 6px; }
+}
+@media (max-width: 590px) {
+  .wrap { width: calc(100% - 28px); }
+  main { padding-top: 17px; }
+  .hero { grid-template-columns: 1fr; min-height: 0; }
+  .hero-art { min-height: 205px; }
+  .hero-art svg { width: min(76%, 260px); }
+  .hero h1 { margin-block: 11px; }
+  .hero p { font-size: 1em; }
+  .course { font-size: .68rem; padding: 4px 8px; }
+  .match, .review { grid-template-columns: 1fr; gap: 5px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .button, .choice, .square { transition: background-color .15s, transform .15s; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap brandbar">
+    <span class="brand"><i aria-hidden="true"></i>Креайтивика</span>
+    <span class="course">IT Start · Модуль 6</span>
+  </div>
+</header>
+<main class="wrap" id="app"></main>
+<footer>
+  <div class="wrap">
+    <span>MakeCode Arcade · Основы разработки игр</span>
+    <button class="quiet" id="restart" type="button" hidden>Начать заново</button>
+  </div>
+</footer>
+<p class="sr" id="announcement" role="status" aria-live="polite"></p>
+<dialog id="reset-dialog" aria-labelledby="reset-title">
+  <h3 id="reset-title">Начать заново?</h3>
+  <p>Ответы на этом устройстве сотрутся.</p>
+  <form method="dialog">
+    <button class="button subtle" value="cancel" autofocus>Продолжить</button>
+    <button class="button primary" value="reset">Начать заново</button>
+  </form>
+</dialog>
+<noscript>Включи JavaScript в браузере, чтобы открыть задания.</noscript>
+<script>
+'use strict';
+
+const tasks = [
+  { type: 'pick', tag: 'Переменные', title: 'Где игра хранит счёт?',
+    prompt: 'Счёт был 2, а после доставки стал 3. Что в игре называют переменной?',
+    choices: ['Картинку, из которой сделан герой', 'Место, где игра хранит значение, например число очков', 'Кнопку, которая запускает игру'],
+    answer: 1, explain: 'У переменной есть имя и значение. Например, в переменной «счёт» сначала было число 2, а потом игра записала туда 3.' },
+  { type: 'bins', tag: 'Ввод и вывод', title: 'Что передаёт команды?',
+    prompt: 'Разложи устройства по двум коробкам.',
+    choices: ['Клавиатура', 'Экран', 'Геймпад', 'Колонки'], answer: [0, 1, 0, 1],
+    explain: 'Клавиатура и геймпад передают наши команды в игру. Экран показывает картинку, а колонки выводят звук.' },
+  { type: 'match', tag: 'События', title: 'Что запустит команду?',
+    prompt: 'Для каждого события выбери, что должна сделать игра.',
+    rows: ['Игра началась', 'Нажали стрелку вправо', 'Робот коснулся коробки'],
+    choices: ['Прибавить 1 очко', 'Поставить счёт на 0', 'Перестроить робота вправо'],
+    answer: [1, 2, 0], explain: 'Событие сообщает игре, что что-то произошло. После него игра выполняет команды из нужного блока.' },
+  { type: 'grid', tag: 'Координаты', title: 'Одна клетка вправо',
+    prompt: 'Робот на клетке «Старт». Нажми клетку, на которой он окажется после одного шага вправо.',
+    answer: 5, explain: 'Координата x меняется с 80 на 124, а y остаётся 60. Робот движется вправо и остаётся в том же ряду.' },
+  { type: 'count', tag: 'Счёт', title: 'Посчитай доставку',
+    prompt: 'У робота 2 очка. Он доставил ещё одну коробку и получил 1 очко. Какое число теперь покажет счётчик?',
+    answer: 3, explain: 'К двум очкам прибавляем одно и получаем три. Старые очки остаются.' },
+  { type: 'sort', tag: 'Алгоритм', title: 'Собери шаг змейки',
+    prompt: 'Вспомни наш проект. Расставь команды обычного шага, когда яблока на пути нет.',
+    choices: ['Убрать последний сегмент хвоста', 'Поставить сегмент на старое место головы', 'Передвинуть голову на новую клетку'],
+    answer: [1, 2, 0], explain: 'Сначала ставим сегмент на старое место головы, затем двигаем голову и убираем последнюю часть хвоста. Длина змейки остаётся прежней.' },
+  { type: 'match', tag: 'Условие', title: 'Сворачиваем налево',
+    prompt: 'Нажали стрелку влево. Робот сначала проверяет, есть ли дорожка слева. Что он сделает в каждом случае?',
+    rows: ['Если слева есть дорожка', 'Если слева нет дорожки'],
+    choices: ['Остаться на своей дорожке', 'Перестроиться влево'],
+    answer: [1, 0], explain: 'Условие задаёт вопрос. Ответ «да» отправляет робота на соседнюю дорожку, ответ «нет» оставляет его на месте.' },
+  { type: 'pick', tag: 'Функции', title: 'Пора добавить батарейку',
+    prompt: 'В функции «новая батарейка» уже собраны нужные команды. Какой блок попросит игру выполнить их?',
+    choices: ['функция «новая батарейка»', 'установить счёт в 0', 'вызвать «новая батарейка»'],
+    blocks: true, answer: 2, explain: 'Внутри функции лежат команды. Блок «вызвать» запускает их в нужный момент.' },
+  { type: 'multi', tag: 'Проверка двух координат', title: 'Змейка нашла яблоко?',
+    prompt: 'Голова змейки в точке x = 50, y = 30. Какие две проверки должны дать ответ «да», чтобы голова и яблоко были в одной клетке?',
+    choices: ['У яблока x = 50', 'У яблока y = 50', 'У яблока x = 30', 'У яблока y = 30'],
+    answer: [0, 3], explain: 'Должны совпасть обе координаты: и x, и y. Если совпала только одна, голова и яблоко в разных клетках.' },
+  { type: 'scene', tag: 'Движение', title: 'Робот в лаборатории',
+    prompt: 'Робот стоит на полу. После нажатия кнопки A гравитация начинает тянуть его вверх. Куда он полетит?',
+    choices: ['К потолку', 'К полу'],
+    answer: 0, explain: 'При обычной гравитации робот падает к полу. В платформере мы меняли направление гравитации, и робот летел к потолку.' }
+];
+const steps = [
+  'Пробую вместе с преподавателем', 'Делаю по подсказке',
+  'Могу сделать сам', 'Могу показать другому'
+];
+
+const robot = (hero = false) => `<svg viewBox="${hero ? '0 0 360 310' : '92 57 176 175'}" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg">
+  ${hero ? `<g stroke="#a4ab91" stroke-width="2" stroke-dasharray="6 6"><path d="M19 205h70l31-32m143-53 38-32h41M172 219v48h80M104 111H63V63H32"/></g>
+  <g fill="#e6f34c"><circle cx="22" cy="205" r="5"/><circle cx="338" cy="88" r="5"/><circle cx="32" cy="63" r="5"/><circle cx="252" cy="267" r="5"/></g>
+  <g transform="translate(264 155) rotate(12)"><rect width="57" height="46" rx="8" fill="#ffbd46"/><path d="M10 16h37M28 3v21" stroke="#202421" stroke-width="3"/></g>
+  <g transform="translate(34 124) rotate(-12)"><rect width="53" height="40" rx="8" fill="#eee5fa"/><path d="m20 12-7 8 7 8m13-16 7 8-7 8" stroke="#202421" stroke-width="3" stroke-linecap="round"/></g>` : ''}
+  <g stroke="#202421" stroke-width="5" stroke-linejoin="round">
+    <path d="M159 191v29h-34v-24m78-5v29h34v-24" fill="#ffbd46"/>
+    <path d="M130 151h-23v39h25m98-39h22v39h-22" fill="#cbd88b"/>
+    <rect x="128" y="131" width="104" height="76" rx="19" fill="#e6f34c"/>
+    <path d="M180 77V61" stroke="#ffbd46" stroke-linecap="round"/>
+    <circle cx="180" cy="57" r="8" fill="#ffbd46"/>
+    <rect x="112" y="75" width="136" height="84" rx="23" fill="#fffefa"/>
+    <rect x="127" y="89" width="106" height="54" rx="14" fill="#202421"/>
+    <rect x="158" y="168" width="45" height="20" rx="5" fill="#ffbd46"/>
+  </g>
+  <path d="M149 112v8m62-8v8m-39 4c4 5 12 5 16 0" stroke="#e6f34c" stroke-width="6" stroke-linecap="round"/>
+  <path d="m181 171-6 8h10l-6 7" stroke="#202421" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`;
+
+const key = 'creitivika-it-start-m6-worksheet-v1';
+const app = document.querySelector('#app');
+const announcement = document.querySelector('#announcement');
+const restart = document.querySelector('#restart');
+const resetDialog = document.querySelector('#reset-dialog');
+let activeToken = null;
+let state = readState();
+
+function newState() {
+  return {
+    screen: 'intro', current: 0, self: null,
+    items: tasks.map(task => ({
+      value: task.type === 'bins' || task.type === 'match'
+        ? Array((task.rows || task.choices).length).fill(null)
+        : task.type === 'sort' ? [0, 1, 2]
+        : task.type === 'multi' ? [] : null,
+      first: null, last: null, seen: false
+    }))
+  };
+}
+
+function readState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(key));
+    if (saved && ['intro', 'work', 'results'].includes(saved.screen)
+        && Number.isInteger(saved.current) && saved.current >= 0 && saved.current < tasks.length
+        && Array.isArray(saved.items) && saved.items.length === tasks.length
+        && saved.items.every(item => item && [true, false, null].includes(item.first))) return saved;
+  } catch {}
+  return newState();
+}
+
+function save() {
+  try { localStorage.setItem(key, JSON.stringify(state)); } catch {}
+}
+
+function speak(text) { announcement.textContent = text; }
+function finished() { return state.items.filter(item => item.first !== null).length; }
+function button(text, attrs = '', classes = 'button') { return `<button type="button" class="${classes}" ${attrs}>${text}</button>`; }
+function choice(text, active, action, classes = '') {
+  return button(`<span class="mark" aria-hidden="true">${active ? '✓' : ''}</span><span>${text}</span>`,
+    `${action} aria-pressed="${active}"`, `choice ${classes}`);
+}
+
+function show(focus = false) {
+  restart.hidden = state.screen === 'intro';
+  if (state.screen === 'intro') {
+    app.innerHTML = `<section class="hero">
+      <div class="hero-copy">
+        <span class="tag">Рабочий лист · MakeCode Arcade</span>
+        <h1 tabindex="-1">Игровая<br>мастерская</h1>
+        <p>Помнишь робота и змейку? Проверь, как устроены их игры. Где хранятся очки? Что запускает команду?</p>
+        ${button('Открыть задания →', 'data-action="start"', 'button primary')}
+        <div class="meta"><span>10 заданий</span><span>Можно не спешить</span></div>
+      </div>
+      <div class="hero-art">${robot(true)}<small>РОБОТ НА СВЯЗИ</small></div>
+    </section>`;
+  } else if (state.screen === 'work') renderWork();
+  else renderResults();
+  if (focus) {
+    app.querySelector('h1,h2').focus({ preventScroll: true });
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+}
+
+function renderWork() {
+  const i = state.current;
+  const task = tasks[i];
+  const item = state.items[i];
+  const checked = finished();
+  const advance = checked === tasks.length ? 'К результату →' : 'Дальше →';
+  app.innerHTML = `<div class="work">
+    <aside class="rail" aria-label="Прогресс">
+      <div class="tag">Проверено ${checked} из ${tasks.length}</div>
+      <progress value="${checked}" max="${tasks.length}" aria-label="Проверенные задания"></progress>
+      <nav class="steps" aria-label="Задания">${tasks.map((t, j) => button(j + 1,
+        `data-jump="${j}" aria-label="Задание ${j + 1}. ${t.tag}${state.items[j].first === null ? '' : '. Проверено'}" ${i === j ? 'aria-current="step"' : ''}`,
+        `step ${state.items[j].first !== null ? 'done' : ''}`)).join('')}</nav>
+      <p>Можно вернуться к любому заданию.</p>
+    </aside>
+    <section class="panel" aria-labelledby="task-title">
+      <div class="panel-head">
+        <div class="tag">${String(i + 1).padStart(2, '0')} / ${tasks.length} · ${task.tag}</div>
+        <h2 id="task-title" tabindex="-1">${task.title}</h2>
+        <p class="lead">${task.prompt}</p>
+      </div>
+      <div class="activity">
+        ${renderActivity(task, item)}
+        ${item.last === null ? '' : `<div class="feedback ${item.last ? 'good' : ''}" id="feedback" tabindex="-1">
+          <strong>${item.last ? 'Верно!' : 'Давай разберёмся.'}</strong>${task.explain}</div>`}
+      </div>
+      <div class="controls">
+        ${button('Проверить', `data-action="check" ${!ready(task, item) || item.last !== null ? 'disabled' : ''}`, 'button accent')}
+        ${button(advance, 'data-action="next"', 'button subtle next')}
+      </div>
+    </section>
+  </div>`;
+}
+
+function renderActivity(task, item) {
+  const value = item.value;
+  if (task.type === 'pick' || task.type === 'multi') {
+    const multi = task.type === 'multi';
+    return `<p class="hint">${multi ? 'Отметь два ответа.' : 'Выбери один ответ.'}</p><div class="choices">
+      ${task.choices.map((text, i) => choice(text, multi ? value.includes(i) : value === i,
+        `data-choice="${i}"`, multi ? 'multi' : task.blocks ? 'block' : '')).join('')}</div>`;
+  }
+  if (task.type === 'bins') {
+    const tokens = bin => task.choices.map((name, index) => value[index] === bin ? button(name,
+      `draggable="true" data-token="${index}" aria-pressed="${activeToken === index}"`, 'token') : '').join('');
+    return `<p class="hint">Перетащи карточку. Можно нажать на карточку, а потом на коробку.</p>
+      <div class="bank" data-drop="bank" aria-label="Свободные карточки">${tokens(null) || 'Все карточки разложены.'}</div>
+      <div class="bins">${['Ввод', 'Вывод'].map((name, bin) => `<div class="bin" data-drop="${bin}">
+        ${button(name, `data-bin="${bin}"`, 'zone')}
+        <div class="tokens">${tokens(bin)}</div>
+      </div>`).join('')}</div>`;
+  }
+  if (task.type === 'match') {
+    return `<p class="hint">Открой окошко справа от каждой строки.</p><div class="matches">
+      ${task.rows.map((label, row) => `<label class="match"><span>${label}</span>
+        <select data-match="${row}">
+          <option value="" ${value[row] === null ? 'selected' : ''}>Выбери действие</option>
+          ${task.choices.map((name, i) => `<option value="${i}" ${value[row] === i ? 'selected' : ''}>${name}</option>`).join('')}
+        </select></label>`).join('')}</div>`;
+  }
+  if (task.type === 'grid') {
+    const xs = [36, 80, 124], ys = [20, 60, 100];
+    return `<div class="map" aria-label="Поле координат">
+      <span class="axis">y ↓</span>${xs.map(x => `<span class="axis">x = ${x}</span>`).join('')}
+      ${ys.map((y, row) => `<span class="axis">${y}</span>${xs.map((x, col) => {
+        const i = row * xs.length + col;
+        return button(i === 4 ? 'Старт' : value === i ? '✓' : '·',
+          `data-choice="${i}" aria-label="${i === 4 ? 'Старт, ' : ''}x ${x}, y ${y}" aria-pressed="${value === i}"`,
+          `square ${i === 4 ? 'start' : ''}`);
+      }).join('')}`).join('')}</div>`;
+  }
+  if (task.type === 'count') {
+    return `<p class="hint">Выставь ответ кнопками − и +.</p><div class="board-count">
+      ${button('−', `data-count="-1" aria-label="Уменьшить ответ" ${(value ?? 0) === 0 ? 'disabled' : ''}`)}
+      <output aria-label="Твой ответ">${value ?? 0}</output>
+      ${button('+', `data-count="1" aria-label="Увеличить ответ" ${value === 9 ? 'disabled' : ''}`)}
+    </div>`;
+  }
+  if (task.type === 'sort') {
+    return `<p class="hint">Перетаскивай карточки или поднимай и опускай их кнопками ↑ и ↓.</p>
+      <ol class="sort">${value.map((id, rank) => `<li draggable="true" data-sort="${id}">
+        <b aria-hidden="true">${rank + 1}.</b><span>${task.choices[id]}</span>
+        ${button('↑', `data-move="-1" data-id="${id}" aria-label="Выше: ${task.choices[id]}" ${rank === 0 ? 'disabled' : ''}`, 'move')}
+        ${button('↓', `data-move="1" data-id="${id}" aria-label="Ниже: ${task.choices[id]}" ${rank === value.length - 1 ? 'disabled' : ''}`, 'move')}
+      </li>`).join('')}</ol>`;
+  }
+  return `<div class="scene" aria-label="Комната платформера">
+    ${button(task.choices[0], `data-choice="0" aria-pressed="${value === 0}"`, 'zone')}
+    <figure>${robot()}</figure>
+    ${button(task.choices[1], `data-choice="1" aria-pressed="${value === 1}"`, 'zone')}
+  </div>`;
+}
+
+function renderResults() {
+  const score = state.items.filter(item => item.first === true).length;
+  app.innerHTML = `<section class="panel results">
+    <div class="panel-head">
+      <div class="tag">Мастерская · Итог</div>
+      <h2 tabindex="-1">Все задания пройдены</h2>
+      <p class="lead">Посмотри, что получилось с первого раза. К любому заданию можно вернуться.</p>
+    </div>
+    <div class="activity">
+      <div class="result-lead"><strong class="score">${score} / ${tasks.length}</strong><span>Верно с первого раза</span></div>
+      <div class="review">${tasks.map((task, i) => {
+        const good = state.items[i].first === true;
+        return button(`${i + 1}. ${task.tag}<span class="sr">. ${good ? 'Верно с первого раза' : 'Можно повторить'}</span>`,
+          `data-jump="${i}"`, `button subtle ${good ? 'done' : ''}`);
+      }).join('')}</div>
+      <div class="self">
+        <h3>Лестница успеха</h3>
+        <p>Вспомни, как ты собирал свои игры. На какой ступеньке ты сейчас?</p>
+        <div class="choices">${steps.map((name, i) => choice(`${i + 1}. ${name}`, state.self === i, `data-self="${i}"`)).join('')}</div>
+        ${state.self === null ? '' : '<p class="feedback good">Подумай, что ты хочешь попробовать в следующей игре.</p>'}
+      </div>
+    </div>
+  </section>`;
+}
+
+function ready(task, item) {
+  if (task.type === 'bins' || task.type === 'match') return item.value.every(value => value !== null);
+  if (task.type === 'multi') return item.value.length === task.answer.length;
+  if (task.type === 'sort') return item.seen;
+  return item.value !== null;
+}
+
+function check(task, item) {
+  const value = task.type === 'multi' ? [...item.value].sort((a, b) => a - b) : item.value;
+  const good = JSON.stringify(value) === JSON.stringify(task.answer);
+  if (item.first === null) item.first = good;
+  item.last = good;
+  save();
+  show();
+  document.querySelector('#feedback').focus();
+}
+
+function jump(i) {
+  state.current = i;
+  state.screen = 'work';
+  activeToken = null;
+  save();
+  show(true);
+}
+
+function changeValue(value, focusSelector) {
+  const item = state.items[state.current];
+  item.value = value;
+  item.last = null;
+  item.seen = true;
+  save();
+  show();
+  const target = app.querySelector(focusSelector);
+  if (target && !target.disabled) target.focus({ preventScroll: true });
+}
+
+function moveToken(id, bin) {
+  const value = [...state.items[state.current].value];
+  value[id] = bin;
+  activeToken = null;
+  changeValue(value, `[data-token="${id}"]`);
+  speak(bin === null ? 'Карточка возвращена.' : 'Карточка перемещена.');
+}
+
+function moveSort(id, to) {
+  const value = [...state.items[state.current].value];
+  const from = value.indexOf(id);
+  if (to < 0 || to >= value.length || to === from) return;
+  value.splice(from, 1);
+  value.splice(to, 0, id);
+  const direction = to === 0 ? 1 : -1;
+  changeValue(value, `[data-id="${id}"][data-move="${direction}"]`);
+  speak(`Команда на месте ${to + 1}.`);
+}
+
+app.addEventListener('click', event => {
+  const pressed = event.target.closest('button');
+  if (!pressed) return;
+  const data = pressed.dataset;
+  const task = tasks[state.current];
+  const item = state.items[state.current];
+  if (data.jump !== undefined) jump(Number(data.jump));
+  else if (data.action === 'start') jump(state.current);
+  else if (data.action === 'check' && ready(task, item)) check(task, item);
+  else if (data.action === 'next') {
+    if (finished() === tasks.length) {
+      state.screen = 'results';
+      save();
+      show(true);
+    } else {
+      let next = (state.current + 1) % tasks.length;
+      if (next === 0) next = state.items.findIndex(entry => entry.first === null);
+      jump(next);
+    }
+  } else if (data.self !== undefined) {
+    state.self = Number(data.self);
+    save();
+    show();
+    app.querySelector(`[data-self="${data.self}"]`).focus({ preventScroll: true });
+    speak('Ступенька выбрана.');
+  } else if (data.choice !== undefined) {
+    const id = Number(data.choice);
+    if (task.type === 'multi') {
+      const value = item.value.includes(id) ? item.value.filter(v => v !== id) : [...item.value, id];
+      changeValue(value, `[data-choice="${id}"]`);
+    } else changeValue(id, `[data-choice="${id}"]`);
+  } else if (data.count !== undefined) {
+    const value = Math.max(0, Math.min(9, (item.value ?? 0) + Number(data.count)));
+    changeValue(value, `[data-count="${value === 0 ? 1 : value === 9 ? -1 : data.count}"]`);
+    speak(`Ответ ${value}.`);
+  } else if (data.token !== undefined) {
+    const id = Number(data.token);
+    activeToken = activeToken === id ? null : id;
+    show();
+    app.querySelector(`[data-token="${id}"]`).focus({ preventScroll: true });
+  } else if (data.bin !== undefined && activeToken !== null) moveToken(activeToken, Number(data.bin));
+  else if (data.move !== undefined) {
+    const id = Number(data.id);
+    moveSort(id, item.value.indexOf(id) + Number(data.move));
+  }
+});
+
+app.addEventListener('change', event => {
+  const row = event.target.dataset.match;
+  if (row === undefined) return;
+  const value = [...state.items[state.current].value];
+  value[row] = event.target.value === '' ? null : Number(event.target.value);
+  changeValue(value, `[data-match="${row}"]`);
+});
+
+let drag = null;
+app.addEventListener('dragstart', event => {
+  const element = event.target.closest('[data-token],[data-sort]');
+  if (!element) return;
+  drag = { id: Number(element.dataset.token ?? element.dataset.sort), sort: element.hasAttribute('data-sort') };
+  event.dataTransfer.effectAllowed = 'move';
+  event.dataTransfer.setData('text/plain', String(drag.id));
+});
+app.addEventListener('dragover', event => {
+  const target = drag && event.target.closest(drag.sort ? '[data-sort]' : '[data-drop]');
+  if (!target) return;
+  event.preventDefault();
+  event.dataTransfer.dropEffect = 'move';
+  app.querySelectorAll('.over').forEach(element => element.classList.remove('over'));
+  target.classList.add('over');
+});
+app.addEventListener('drop', event => {
+  const target = drag && event.target.closest(drag.sort ? '[data-sort]' : '[data-drop]');
+  if (!target) return;
+  event.preventDefault();
+  if (drag.sort) moveSort(drag.id, state.items[state.current].value.indexOf(Number(target.dataset.sort)));
+  else moveToken(drag.id, target.dataset.drop === 'bank' ? null : Number(target.dataset.drop));
+  drag = null;
+  app.querySelectorAll('.over').forEach(element => element.classList.remove('over'));
+});
+app.addEventListener('dragend', () => {
+  drag = null;
+  app.querySelectorAll('.over').forEach(element => element.classList.remove('over'));
+});
+
+restart.addEventListener('click', () => resetDialog.showModal());
+resetDialog.addEventListener('close', () => {
+  if (resetDialog.returnValue !== 'reset') return;
+  resetDialog.returnValue = '';
+  state = newState();
+  activeToken = null;
+  save();
+  show(true);
+});
+show();
+</script>
+</body>
+</html>
