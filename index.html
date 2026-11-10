@@ -7,9 +7,9 @@
 <title>Игровая мастерская · Креайтивика</title>
 <style>
 :root {
-  --ink: #202421; --soft: #4b514b; --cream: #fff9e7; --paper: #fffefa;
-  --lime: #e6f34c; --gold: #ffbd46; --violet: #eee5fa; --green: #def0cf;
-  --line: #d7d8cb; --shadow: 4px 5px 0 var(--ink);
+  --ink: #312d3a; --soft: #4b514b; --cream: #fff9e7; --paper: #fffefa;
+  --lime: #cde57f; --gold: #f8b132; --violet: #eee5fa; --green: #def0cf;
+  --brand-green: #93c021; --line: #d7d8cb; --shadow: 4px 5px 0 var(--ink);
   color: var(--ink); background: var(--cream); font-family: 'Segoe UI', Arial, sans-serif;
   font-synthesis: none;
 }
@@ -28,7 +28,7 @@ header { border-bottom: 1px solid #d8d4c3; background: var(--paper); }
 .wrap { width: min(1080px, 100% - 40px); margin: 0 auto; }
 .brandbar { min-height: 69px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .brand { display: flex; align-items: center; gap: 9px; font-weight: 850; letter-spacing: -.045em; font-size: clamp(1.05rem, 4vw, 1.35rem); }
-.brand i { width: 25px; height: 25px; display: block; background: var(--lime); border: 2px solid; border-radius: 6px; transform: rotate(-12deg); position: relative; }
+.brand i { width: 25px; height: 25px; display: block; background: var(--brand-green); border: 2px solid; border-radius: 6px; transform: rotate(-12deg); position: relative; }
 .brand i::after { position: absolute; content: ''; width: 9px; height: 9px; background: var(--ink); inset: 6px; clip-path: polygon(0 0, 100% 45%, 0 100%); }
 .course, .tag { font-size: .75rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
 .course { white-space: nowrap; background: var(--green); border: 1px solid; border-radius: 999px; padding: 5px 11px; }
@@ -113,7 +113,7 @@ select { color: var(--ink); font: inherit; width: 100%; min-width: 0; padding: 8
 .sort b { font-size: .89rem; color: var(--soft); text-align: center; }
 .move { padding: 0; min-height: 42px; font-size: 1.15rem; }
 .move:disabled { opacity: .45; }
-.scene { max-width: 465px; background: #292e35; border: 2px solid #202421; border-radius: 14px; padding: 12px; display: grid; gap: 10px; }
+.scene { max-width: 465px; background: #292e35; border: 2px solid #312d3a; border-radius: 14px; padding: 12px; display: grid; gap: 10px; }
 .scene .zone { margin: 0; border-radius: 8px; }
 .scene figure { margin: 0; min-height: 70px; display: grid; place-items: center; color: white; }
 .scene svg { width: 66px; height: 62px; }
@@ -137,7 +137,7 @@ footer { padding: 0 0 22px; color: var(--soft); font-size: .84rem; }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 14px; }
 footer button { font-size: inherit; }
 dialog { max-width: min(440px, 100% - 36px); border: 2px solid; border-radius: 17px; background: var(--paper); padding: 22px; color: var(--ink); }
-dialog::backdrop { background: #20242199; }
+dialog::backdrop { background: #312d3a99; }
 dialog p { margin: 9px 0 16px; }
 dialog form { display: flex; flex-wrap: wrap; gap: 8px; }
 .sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
@@ -241,21 +241,21 @@ const steps = [
 
 const robot = (hero = false) => `<svg viewBox="${hero ? '0 0 360 310' : '92 57 176 175'}" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg">
   ${hero ? `<g stroke="#a4ab91" stroke-width="2" stroke-dasharray="6 6"><path d="M19 205h70l31-32m143-53 38-32h41M172 219v48h80M104 111H63V63H32"/></g>
-  <g fill="#e6f34c"><circle cx="22" cy="205" r="5"/><circle cx="338" cy="88" r="5"/><circle cx="32" cy="63" r="5"/><circle cx="252" cy="267" r="5"/></g>
-  <g transform="translate(264 155) rotate(12)"><rect width="57" height="46" rx="8" fill="#ffbd46"/><path d="M10 16h37M28 3v21" stroke="#202421" stroke-width="3"/></g>
-  <g transform="translate(34 124) rotate(-12)"><rect width="53" height="40" rx="8" fill="#eee5fa"/><path d="m20 12-7 8 7 8m13-16 7 8-7 8" stroke="#202421" stroke-width="3" stroke-linecap="round"/></g>` : ''}
-  <g stroke="#202421" stroke-width="5" stroke-linejoin="round">
-    <path d="M159 191v29h-34v-24m78-5v29h34v-24" fill="#ffbd46"/>
+  <g fill="#cde57f"><circle cx="22" cy="205" r="5"/><circle cx="338" cy="88" r="5"/><circle cx="32" cy="63" r="5"/><circle cx="252" cy="267" r="5"/></g>
+  <g transform="translate(264 155) rotate(12)"><rect width="57" height="46" rx="8" fill="#f8b132"/><path d="M10 16h37M28 3v21" stroke="#312d3a" stroke-width="3"/></g>
+  <g transform="translate(34 124) rotate(-12)"><rect width="53" height="40" rx="8" fill="#eee5fa"/><path d="m20 12-7 8 7 8m13-16 7 8-7 8" stroke="#312d3a" stroke-width="3" stroke-linecap="round"/></g>` : ''}
+  <g stroke="#312d3a" stroke-width="5" stroke-linejoin="round">
+    <path d="M159 191v29h-34v-24m78-5v29h34v-24" fill="#f8b132"/>
     <path d="M130 151h-23v39h25m98-39h22v39h-22" fill="#cbd88b"/>
-    <rect x="128" y="131" width="104" height="76" rx="19" fill="#e6f34c"/>
-    <path d="M180 77V61" stroke="#ffbd46" stroke-linecap="round"/>
-    <circle cx="180" cy="57" r="8" fill="#ffbd46"/>
+    <rect x="128" y="131" width="104" height="76" rx="19" fill="#cde57f"/>
+    <path d="M180 77V61" stroke="#f8b132" stroke-linecap="round"/>
+    <circle cx="180" cy="57" r="8" fill="#f8b132"/>
     <rect x="112" y="75" width="136" height="84" rx="23" fill="#fffefa"/>
-    <rect x="127" y="89" width="106" height="54" rx="14" fill="#202421"/>
-    <rect x="158" y="168" width="45" height="20" rx="5" fill="#ffbd46"/>
+    <rect x="127" y="89" width="106" height="54" rx="14" fill="#312d3a"/>
+    <rect x="158" y="168" width="45" height="20" rx="5" fill="#f8b132"/>
   </g>
-  <path d="M149 112v8m62-8v8m-39 4c4 5 12 5 16 0" stroke="#e6f34c" stroke-width="6" stroke-linecap="round"/>
-  <path d="m181 171-6 8h10l-6 7" stroke="#202421" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M149 112v8m62-8v8m-39 4c4 5 12 5 16 0" stroke="#cde57f" stroke-width="6" stroke-linecap="round"/>
+  <path d="m181 171-6 8h10l-6 7" stroke="#312d3a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>`;
 
 const key = 'creitivika-it-start-m6-worksheet-v1';
