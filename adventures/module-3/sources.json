@@ -1,0 +1,34 @@
+[
+  {
+    "lesson": "М3У1",
+    "source": "https://docs.google.com/document/d/11IPiv-XYSGqH_os3a-o4FfoXlhm1Lspdo5vJC8dl4Wo/edit",
+    "images": [
+      "Поля x и y показывают положение выбранного спрайта.",
+      "Условие проверяется внутри цикла, поэтому работает при удержании клавиши."
+    ]
+  },
+  {
+    "lesson": "М3У2",
+    "source": "https://docs.google.com/document/d/17kwAv_xlOptuyXxCFcJ9JHSley1FOufITPuwC174H-4/edit",
+    "images": [
+      "Платформа следует за мышью по горизонтали.",
+      "Предмет ждёт касания, прежде чем выбрать следующую позицию."
+    ]
+  },
+  {
+    "lesson": "М3У3",
+    "source": "https://docs.google.com/document/d/1ATwCql2yWs8vnLMl9bgk0OzykMp517strHRE3x_TWD4/edit",
+    "images": [
+      "В категории Переменные находятся создание, установка и изменение значения.",
+      "При создании выбирают имя и область действия."
+    ]
+  },
+  {
+    "lesson": "М3У4",
+    "source": "https://docs.google.com/document/d/1ZFdnrcshF1Kity0WuzxbNzD-j0oFqU-QGw4B4s_s8vk/edit",
+    "images": [
+      "Расширение Перо добавляет линии, цвет, размер, штамп и очистку.",
+      "Карандаш получает сообщение и очищает следы Пера и штампы."
+    ]
+  }
+]
