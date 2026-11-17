@@ -1,0 +1,34 @@
+[
+  {
+    "lesson": "М2У1",
+    "source": "https://docs.google.com/document/d/1MibpvXHk-5vTz1zYFzj_3AGSmR35uhg0rOIlQAhqFr8/edit",
+    "images": [
+      "Инструменты трансформации и параметры выбранного куба.",
+      "В режиме Paint работают с поверхностью модели."
+    ]
+  },
+  {
+    "lesson": "М2У2",
+    "source": "https://docs.google.com/document/d/1LAwlcNqGFkxhhI_JnczU8QHVvsRKxFUyB1pRYJBbAOo/edit",
+    "images": [
+      "Режим Animate: модель, список частей и таймлайн.",
+      "В методичке ходьбу начинают с изменения поз отдельных лап кота."
+    ]
+  },
+  {
+    "lesson": "М2У3",
+    "source": "https://docs.google.com/document/d/1_xJGb5CxV6VaEhfDDJyqJZAHYis6b5aOJbhcBllCiyc/edit",
+    "images": [
+      "Библиотека объектов и добавленная в сцену ракета.",
+      "Панель трансформаций: перемещение, поворот и масштаб."
+    ]
+  },
+  {
+    "lesson": "М2У4",
+    "source": "https://docs.google.com/document/d/1WccFG6QM6nkS6nGWlTDMafipyB1dopZ5fWjHy3CWlhU/edit",
+    "images": [
+      "Вариант реакции на Diamond: при нажатии установить его непрозрачность 0%.",
+      "Пример из методички: старт, пауза и движение внутри цикла."
+    ]
+  }
+]
