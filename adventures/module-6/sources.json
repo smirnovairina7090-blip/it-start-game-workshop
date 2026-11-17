@@ -1,0 +1,34 @@
+[
+  {
+    "lesson": "М6У1",
+    "source": "https://docs.google.com/document/d/1wA2v97wiEOdeXniQksqVeQDbn3rJZ0PYrXp1RPKiYOY/edit?usp=drivesdk",
+    "images": [
+      "Исходная схема поля: robot относится к Player, три батарейки - к Food. x увеличивается вправо, y вниз.",
+      "Полное событие сбора: уничтожение найденного предмета, прибавление очка, затем условие победы."
+    ]
+  },
+  {
+    "lesson": "М6У2",
+    "source": "https://docs.google.com/document/d/1vCHmlfXomlrsmbvDMt-1jPCSgQ5O9iAwvhM-_pc1y7g/edit?usp=drivesdk",
+    "images": [
+      "Полный переключатель из методички: сброс текущей vy, условие, согласованная смена ay, pullUp и фона.",
+      "Победа вложена в условие hasCard. Событие карты записывает значение, событие двери его читает."
+    ]
+  },
+  {
+    "lesson": "М6У3",
+    "source": "https://docs.google.com/document/d/10GzXVKOs4jvDkp8v8yjfAaNRlEIc-E16TQVnM9TRJ1w/edit?usp=drivesdk",
+    "images": [
+      "Сравнение из методички: обычный ход сохраняет длину, ход с яблоком оставляет добавленный сегмент.",
+      "Ветка роста оставляет кончик и вызывает placeApple после обновления головы. Обычная ветка убирает последний сегмент."
+    ]
+  },
+  {
+    "lesson": "М6У4",
+    "source": "https://docs.google.com/document/d/1sqH8g443lG5iqAOt_ifmB7FWpnUub0rfevEz2Pcwe0o/edit?usp=drivesdk",
+    "images": [
+      "Готовая функция появления посылки: создание, позиция, скорость и автоуничтожение.",
+      "Событие после правки: к удалению добавлено одно очко."
+    ]
+  }
+]
