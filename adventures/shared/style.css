@@ -8,3 +8,5 @@
 @media print{.topbar,.hero,.main-nav,.footer,.journal-aside,.btn,.quiz-sidebar{display:none!important}.wrap{width:100%}.page-section{display:block!important;padding:12px}.journal-layout{display:block}.journal-card{break-inside:avoid;margin-bottom:14px}.station-dialog{display:none}.journal-card textarea{min-height:50px}.journal-card .text-field{border:0;padding:0}body{font-size:12px;background:white}.completion-card{break-inside:avoid}}
 
 .out-arrow{display:inline-block;position:relative;width:12px;height:12px;flex-shrink:0;margin-left:3px}.out-arrow:before{content:"";position:absolute;width:10px;height:1.5px;background:currentColor;transform:rotate(-45deg);left:0;top:6px}.out-arrow:after{content:"";position:absolute;right:1px;top:1px;width:6px;height:6px;border-top:1.5px solid currentColor;border-right:1.5px solid currentColor}
+.station-dialog{max-width:1000px}
+@media(max-width:760px){.dialog-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px}.dialog-tabs button{padding:10px 4px;font-size:11px;line-height:1.35;white-space:normal}}
