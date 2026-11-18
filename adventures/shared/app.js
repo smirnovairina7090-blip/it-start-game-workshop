@@ -1,9 +1,182 @@
 (function(){
 'use strict';
 const D=window.EXPEDITION;if(!D)return;
+const JOURNALS = {
+  2: {
+    skills: [
+      'Собираю объёмного персонажа из отдельных деталей в Blockbench.',
+      'Меняю положение, поворот и размер частей модели.',
+      'Рисую текстуру и сохраняю редактируемую модель в .bbmodel.',
+      'Создаю позы с помощью ключевых кадров на таймлайне.',
+      'Проверяю плавность анимации и переход от конца к началу.',
+      'Собираю сцену CoSpaces и выбираю подходящий масштаб объектов.',
+      'Связываю нажатие на объект с его реакцией в CoBlocks.',
+      'Запускаю движение по сценарию: старт, пауза и действие.'
+    ],
+    projects: [
+      { intro: 'В Blockbench мы собрали кота из простых объёмных деталей и придумали ему внешний вид.', image: 1, bullets: [
+        'Добавили голову, туловище, уши, отдельные лапы и хвост.',
+        'Настроили размеры и положение деталей, рассмотрели модель с разных сторон.',
+        'Нарисовали мордочку на текстуре и сохранили редактируемый проект.'
+      ] },
+      { intro: 'Наш объёмный кот ожил: научился приветствовать зрителя и шагать.', image: 0, bullets: [
+        'Создали разные позы персонажа в режиме Animate.',
+        'Расставили ключевые кадры для нужных частей на таймлайне.',
+        'Запустили анимацию и проверили её повторение.'
+      ] },
+      { intro: 'В CoSpaces мы стали авторами собственного виртуального мира.', image: 0, bullets: [
+        'Выбрали тему сцены и добавили объекты из библиотеки.',
+        'Разместили, повернули и изменили масштаб объектов.',
+        'Посмотрели на мир из режима запуска и выбрали, что увидит игрок.'
+      ] },
+      { intro: 'Мы добавили в мир интерактивный секрет и автоматический полёт ракеты.', image: 0, bullets: [
+        'Связали нажатие на секретный предмет с нужной реакцией.',
+        'Собрали последовательность для ракеты: запуск, пауза и движение.',
+        'Проверили оба сценария в работающей сцене.'
+      ] }
+    ]
+  },
+  3: {
+    skills: [
+      'Определяю положение спрайта по координатам x и y.',
+      'Настраиваю управление мышью и клавиатурой через условия в цикле.',
+      'Размещаю скрипты у нужных спрайтов и настраиваю реакцию на касание.',
+      'Создаю переменные, задаю стартовые значения и изменяю их в игре.',
+      'Проверяю запас патронов, жизни и условие завершения игры.',
+      'Рисую линии, меняю цвет и ставлю штампы с расширением Перо.',
+      'Передаю сообщения между кнопками и исполнителем.',
+      'Сохраняю Scratch-проект в .sb3 и проверяю его после открытия.'
+    ],
+    projects: [
+      { intro: 'В Scratch мы подготовили корабль к полёту и придумали ему два способа управления.', image: 0, bullets: [
+        'Разобрались с координатами x и y и направлением движения.',
+        'Научили корабль реагировать на стрелки и следовать за мышью.',
+        'Проверили управление и сохранили проект в .sb3.'
+      ] },
+      { intro: 'Мы собрали собственный Pong с платформой, мячом и коллекционным предметом.', image: 0, bullets: [
+        'Связали горизонтальное движение платформы с мышью.',
+        'Настроили отскок мяча и реакцию на касание кристалла.',
+        'Добавили завершение раунда при промахе мимо платформы.'
+      ] },
+      { intro: 'Игра получила правила: ограниченный запас патронов, жизни игрока и жизни врага.', image: 0, bullets: [
+        'Создали переменные и задали им значения при новом запуске.',
+        'Разрешили выстрел только при наличии патронов.',
+        'Учли попадания и завершили игру, когда жизни закончились.'
+      ] },
+      { intro: 'Мы превратили Scratch в рисовалку со своей палитрой и штампами.', image: 0, bullets: [
+        'Подключили Перо и разрешили рисовать при нажатии мыши.',
+        'Добавили выбор цвета и отдельный отпечаток по клику.',
+        'Передали сообщение очистки и сохранили кнопки и фон.'
+      ] }
+    ]
+  },
+  4: {
+    skills: [
+      'Различаю оригинал и клон, управляю появлением и удалением копий.',
+      'Передаю сообщения и выбираю, когда нужно дождаться выполнения.',
+      'Проверяю цену покупки, разрешённое место и расход игровой валюты.',
+      'Задаю условия победы, поражения и нового запуска игры.',
+      'Создаю собственный блок и вызываю его из рабочего скрипта.',
+      'Связываю прыжок и гравитацию с правильным касанием платформы.',
+      'Подсчитываю очки и сохраняю рекорд между попытками.',
+      'Получаю силу джойстика от 0 до 1 и обнуляю её при отпускании.'
+    ],
+    projects: [
+      { intro: 'В Tower Defense мы запустили волны врагов с помощью клонов.', image: 0, bullets: [
+        'Спрятали оригинал и задали маршрут его видимым копиям.',
+        'Добавили паузы между появлениями врагов.',
+        'Выдали награду за попадание и удалили врагов в конце маршрута.'
+      ] },
+      { intro: 'Мы довели Tower Defense до полноценной игры с магазином и разными финалами.', image: 0, bullets: [
+        'Проверили цену башни перед покупкой и списанием монет.',
+        'Ограничили место установки и настроили стрельбу из каждой башни.',
+        'Добавили жизни, экраны победы и поражения и подготовку новой игры.'
+      ] },
+      { intro: 'В Doodle Jump мы собрали прыжок по платформам и гонку за новым рекордом.', image: 0, bullets: [
+        'Создали собственные блоки прыжка и гравитации и вызвали их в цикле.',
+        'Настроили отталкивание при падении и появление новых платформ.',
+        'Начислили очки за пройденный путь и сохранили лучший результат.'
+      ] },
+      { intro: 'Мы сделали джойстик, связали его с героем и устроили сбор топлива на время.', image: 0, bullets: [
+        'Ограничили движение стика радиусом неподвижной базы.',
+        'Перевели отклонение в силу от 0 до 1 и обнулили её при отпускании.',
+        'Добавили канистры, таймер и условие завершения игрового раунда.'
+      ] }
+    ]
+  },
+  5: {
+    skills: [
+      'Рисую узнаваемого героя на холсте 32 × 32 в Piskel.',
+      'Использую карандаш, заливку и пипетку, сохраняю прозрачный фон.',
+      'Делаю анимацию из кадров и подбираю FPS по смыслу движения.',
+      'Выбираю формат для задачи: .piskel, PNG или GIF.',
+      'Загружаю внешние виды как костюмы одного спрайта в Scratch.',
+      'Удерживаю показатели питомца в диапазоне от 0 до 100.',
+      'Защищаю действие состоянием занятости и передаю сообщения.',
+      'Собираю команды в список и выполняю их по очереди с ожиданием.'
+    ],
+    projects: [
+      { intro: 'В Piskel мы нарисовали робота с собственной профессией для Creative Hub.', image: 0, bullets: [
+        'Собрали узнаваемый силуэт на холсте 32 × 32.',
+        'Добавили рабочую деталь, знак и цвета, сохранили прозрачность вокруг героя.',
+        'Сохранили редактируемый исходник .piskel и картинку PNG.'
+      ] },
+      { intro: 'Наш робот научился подавать сигнал с помощью короткой пиксельной анимации.', image: 1, bullets: [
+        'Создали несколько кадров с изменением выбранной детали.',
+        'Сохранили положение корпуса и контура между кадрами.',
+        'Подобрали FPS, проверили повторение и экспортировали GIF.'
+      ] },
+      { intro: 'Мы придумали питомца и подготовили для него несколько внешних видов.', image: 1, bullets: [
+        'Нарисовали обычный вид, радость и сон с одинаковым положением корпуса.',
+        'Экспортировали отдельные PNG с прозрачным фоном.',
+        'Загрузили картинки как костюмы одного спрайта и сохранили .sb3.'
+      ] },
+      { intro: 'Питомец стал тамагочи: живёт дома, меняет показатели и учится выступать в школе.', image: 0, bullets: [
+        'Добавили показатели, ограничения действий и состояние занятости.',
+        'Собрали очередь трюков в списке и выполнили её по порядку.',
+        'Сохранили данные при переходе между комнатами и настроили новую игру.'
+      ] }
+    ]
+  },
+  6: {
+    skills: [
+      'Размещаю спрайты в MakeCode Arcade по координатам x и y.',
+      'Различаю виды Player, Food и Exit и обрабатываю встречу объектов.',
+      'Настраиваю счёт, сбор предметов и победу при достижении цели.',
+      'Меняю гравитацию через ay, учитываю скорость vy и логическое состояние.',
+      'Использую переменную hasCard, чтобы разрешить или запретить выход.',
+      'Двигаю змейку по клеткам, обновляю её хвост и добавляю рост.',
+      'Создаю и вызываю функции, отдельно настраиваю положение и скорость.',
+      'Сохраняю проект Arcade в PNG и проверяю его повторным импортом.'
+    ],
+    projects: [
+      { intro: 'В MakeCode Arcade мы помогли роботу найти три батарейки.', image: 0, bullets: [
+        'Создали героя Player и батарейки Food, добавили управление стрелками.',
+        'Уничтожили найденный предмет через otherSprite и прибавили очко.',
+        'Завершили игру победой после третьей батарейки.'
+      ] },
+      { intro: 'Мы собрали платформер, в котором герой может менять направление гравитации.', image: 0, bullets: [
+        'Добавили стены и переключение ay со сбросом прежней скорости vy.',
+        'Запомнили находку карты в переменной hasCard.',
+        'Разрешили победу у двери только после получения карты.'
+      ] },
+      { intro: 'Наша змейка научилась двигаться по клеткам и расти после яблока.', image: 0, bullets: [
+        'Рассчитали следующую клетку и запретили прямой разворот.',
+        'Обновили список хвоста: добавили новый сегмент и убрали старый кончик.',
+        'Оставили дополнительный сегмент при росте и проверили края поля.'
+      ] },
+      { intro: 'Мы отправили курьера собирать три посылки и доработали готовую игру.', image: 0, bullets: [
+        'Изменили вид машины и скорость, сохранив положение дорожек.',
+        'Создали функцию spawnParcel с появлением, движением и удалением коробки.',
+        'Начислили очки за доставку и проверили сохранённый проект повторным импортом.'
+      ] }
+    ]
+  }
+};
+const J=JOURNALS[D.id];
 const KEY='creitivika-expedition-'+D.id+'-v1';
 const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let storageOK=true;let state={done:[false,false,false,false],checks:[[],[],[],[]],notes:['','','',''],tasks:{},name:'',reflection:'',quizIndex:0,quizEnd:false};
+let storageOK=true;let state={done:[false,false,false,false],skills:[],notes:['','','',''],tasks:{},name:'',reflection:'',quizIndex:0,quizEnd:false};
 try{const old=JSON.parse(localStorage.getItem(KEY)||'null');if(old&&old.tasks&&Array.isArray(old.done))state=Object.assign(state,old);}catch(e){storageOK=false;}
 let view=location.hash==='#quiz'?'quiz':location.hash==='#journal'?'journal':'route';let stationIndex=0;let stationTab='memory';let focusBeforeDialog=null;
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){storageOK=false;}updateStats();}
@@ -25,15 +198,17 @@ function taskState(key,q){if(!state.tasks[key]){let a=null;if(q.type==='multi'||
 function score(){return D.quiz.filter((q,i)=>taskState('q'+i,q).correct).length;}
 function complete(){return state.done.every(Boolean)&&score()===D.quiz.length;}
 function updateStats(){const n=state.done.filter(Boolean).length;document.querySelectorAll('[data-done-count]').forEach(e=>e.textContent=n);document.querySelectorAll('[data-score-count]').forEach(e=>e.textContent=score());document.querySelectorAll('.signal-ring').forEach(e=>e.style.setProperty('--progress',n*25));document.querySelectorAll('[data-signal-dot]').forEach(e=>e.classList.toggle('on',!!state.done[Number(e.dataset.signalDot)]));const no=document.getElementById('storage-notice');if(no)no.hidden=storageOK;const saveEl=document.getElementById('save-status');if(saveEl)saveEl.textContent=storageOK?'Прогресс сохраняется':'Скачай свой журнал';}
-function renderRoute(){document.getElementById('view-route').innerHTML='<div class="section-title"><div><div class="eyebrow">Твой путь через модуль</div><h2 style="margin-top:10px">Карта маршрута</h2><p>Открой станцию, вспомни главное и забери её сигнал.</p></div></div><div class="route-layout"><div class="station-grid">'+D.stations.map((s,i)=>'<article class="station-card '+(state.done[i]?'complete':'')+'" style="--tint:'+esc(s.tint||D.palette[2])+'"><div class="card-top"><span class="station-glyph">'+icon(s.icon)+'</span>'+(state.done[i]?'<span class="signal-badge">Сигнал получен ✓</span>':'<span class="station-index">СТАНЦИЯ 0'+(i+1)+'</span>')+'</div><h3>'+esc(s.title)+'</h3><p>'+esc(s.blurb)+'</p><button class="btn small" data-station="'+i+'">'+(state.done[i]?'Вернуться на станцию':'Исследовать станцию')+' <span aria-hidden="true"><span class="out-arrow" aria-hidden="true"></span></span></button></article>').join('')+'<div class="passport-banner"><div><h3>Твои проекты - часть экспедиции</h3><p>Отметь, что у тебя получилось, и сохрани журнал своих открытий.</p></div><button class="btn" data-view="journal">Открыть журнал <span class="out-arrow" aria-hidden="true"></span></button></div></div><aside class="journey-panel"><div class="eyebrow">Панель экспедиции</div><div class="signal-ring" style="--progress:0"><span class="signal-count"><span data-done-count>0</span> / 4<small>сигнала собрано</small></span></div><h3>'+esc(D.missionTitle)+'</h3><p>'+esc(D.mission)+'</p><div class="signal-dots" aria-hidden="true">'+D.stations.map((_,i)=>'<span data-signal-dot="'+i+'"></span>').join('')+'</div><button class="btn" data-view="quiz">Испытание портала <span aria-hidden="true">→</span></button><div class="mission-tip"><p>Станции открыты в любом порядке. Подсказки и скриншоты можно смотреть сколько угодно.</p></div><ul class="mini-list"><li>Вспомни важное</li><li>Разберись с заданием</li><li>Проверь свой проект</li></ul></aside></div>'+(complete()?completionHTML():'');updateStats();}
+function renderRoute(){document.getElementById('view-route').innerHTML='<div class="section-title"><div><div class="eyebrow">Твой путь через модуль</div><h2 style="margin-top:10px">Карта маршрута</h2><p>Открой станцию, вспомни главное и забери её сигнал.</p></div></div><div class="route-layout"><div class="station-grid">'+D.stations.map((s,i)=>'<article class="station-card '+(state.done[i]?'complete':'')+'" style="--tint:'+esc(s.tint||D.palette[2])+'"><div class="card-top"><span class="station-glyph">'+icon(s.icon)+'</span>'+(state.done[i]?'<span class="signal-badge">Сигнал получен ✓</span>':'<span class="station-index">СТАНЦИЯ 0'+(i+1)+'</span>')+'</div><h3>'+esc(s.title)+'</h3><p>'+esc(s.blurb)+'</p><button class="btn small" data-station="'+i+'">'+(state.done[i]?'Вернуться на станцию':'Исследовать станцию')+' <span aria-hidden="true"><span class="out-arrow" aria-hidden="true"></span></span></button></article>').join('')+'<div class="passport-banner"><div><h3>Твои проекты - часть экспедиции</h3><p>Вспомни созданные проекты, а в конце отметь навыки, которым научился за модуль.</p></div><button class="btn" data-view="journal">Открыть журнал <span class="out-arrow" aria-hidden="true"></span></button></div></div><aside class="journey-panel"><div class="eyebrow">Панель экспедиции</div><div class="signal-ring" style="--progress:0"><span class="signal-count"><span data-done-count>0</span> / 4<small>сигнала собрано</small></span></div><h3>'+esc(D.missionTitle)+'</h3><p>'+esc(D.mission)+'</p><div class="signal-dots" aria-hidden="true">'+D.stations.map((_,i)=>'<span data-signal-dot="'+i+'"></span>').join('')+'</div><button class="btn" data-view="quiz">Испытание портала <span aria-hidden="true">→</span></button><div class="mission-tip"><p>Станции открыты в любом порядке. Подсказки и скриншоты можно смотреть сколько угодно.</p></div><ul class="mini-list"><li>Вспомни важное</li><li>Разберись с заданием</li><li>Вспомни свой проект</li></ul></aside></div>'+(complete()?completionHTML():'');updateStats();}
 function renderView(scroll){document.querySelectorAll('[role=tabpanel]').forEach(e=>e.hidden=e.id!=='view-'+view);document.querySelectorAll('.nav-tabs [role=tab]').forEach(e=>{const yes=e.dataset.view===view;e.setAttribute('aria-selected',yes);e.tabIndex=yes?0:-1;});if(view==='route')renderRoute();if(view==='journal')renderJournal();if(view==='quiz')renderQuiz();if(scroll)document.querySelector('.main-nav').scrollIntoView({behavior:'smooth',block:'start'});}
 function changeView(v){view=v;history.replaceState(null,'','#'+v);renderView(true);}
-function checksHTML(i){const s=D.stations[i];return '<div class="checklist">'+s.checks.map((text,j)=>'<label class="checkrow '+(state.checks[i][j]?'checked':'')+'"><input type="checkbox" data-check-station="'+i+'" data-check-index="'+j+'" '+(state.checks[i][j]?'checked':'')+'><span>'+esc(text)+'</span></label>').join('')+'</div>';}
+function recapListHTML(i){return '<ul class="project-recap-list">'+J.projects[i].bullets.map(text=>'<li>'+esc(text)+'</li>').join('')+'</ul>';}
+function projectRecapHTML(i){const p=J.projects[i],im=D.stations[i].images[p.image];return '<p class="project-recap-intro">'+esc(p.intro)+'</p><div class="project-recap-grid"><button class="screenshot-button recap-screenshot" data-image="'+p.image+'" data-image-station="'+i+'" aria-label="Увеличить скриншот к проекту '+esc(D.stations[i].project)+'"><span class="image-box"><img src="'+esc(im.src)+'" alt="'+esc(im.alt)+'" loading="lazy"></span><span class="recap-image-caption">Фрагмент из методички<span>Нажми, чтобы увеличить <span class="out-arrow" aria-hidden="true"></span></span></span></button><div><div class="recap-label">Что мы сделали</div>'+recapListHTML(i)+'</div></div>';}
+function skillsHTML(){return '<div class="checklist module-skills" role="group" aria-label="Чему я научился за модуль">'+J.skills.map((text,j)=>'<label class="checkrow '+(state.skills[j]?'checked':'')+'"><input type="checkbox" data-skill-index="'+j+'" '+(state.skills[j]?'checked':'')+'><span>'+esc(text)+'</span></label>').join('')+'</div>';}
 function openStation(i){stationIndex=i;stationTab='memory';focusBeforeDialog=document.activeElement;renderStation();dialog.showModal();dialog.scrollTop=0;}
 function renderStation(){const s=D.stations[stationIndex];document.getElementById('station-kicker').textContent='Станция 0'+(stationIndex+1)+' / '+s.lesson;document.getElementById('station-title').textContent=s.title;document.querySelectorAll('[data-station-tab]').forEach(e=>e.setAttribute('aria-selected',e.dataset.stationTab===stationTab));let html='';
 if(stationTab==='memory'){html='<p class="dialog-lead">'+esc(s.story)+'</p><div class="eyebrow">Нажми на понятие и загляни внутрь</div><div class="knowledge-grid">'+s.terms.map(t=>'<details class="knowledge-card"><summary>'+esc(t[0])+'</summary><p>'+esc(t[1])+'</p></details>').join('')+'</div><h3 class="subheading">Вспомни, как это выглядело</h3><div class="screenshot-grid">'+s.images.map((im,j)=>'<button class="screenshot-button" data-image="'+j+'"><span class="image-box"><img src="'+esc(im.src)+'" alt="'+esc(im.alt)+'" loading="lazy"></span><figcaption>'+esc(im.caption||im.alt)+'<br><strong>Нажми, чтобы увеличить <span class="out-arrow" aria-hidden="true"></span></strong></figcaption></button>').join('')+'</div><div class="software-bar">'+s.links.map(a=>'<a class="btn small ghost" href="'+esc(a.url)+'" target="_blank" rel="noopener noreferrer">'+esc(a.label)+' <span class="out-arrow" aria-hidden="true"></span></a>').join('')+'</div><p class="software-note">'+esc(s.linkNote||'Открой свой проект или учебную заготовку, если хочешь проверить действие в программе.')+'</p><div class="task-actions"><button class="btn primary" data-station-tab="practice">Перейти к заданию →</button></div>';}
 if(stationTab==='practice'){html='<p class="dialog-lead">'+esc(s.challengeIntro||'Примени то, что вспомнил. Можно возвращаться к карточкам и пользоваться подсказкой.')+'</p><div class="task-shell" data-task-key="s'+stationIndex+'">'+taskHTML('s'+stationIndex,s.task)+'</div><div class="task-actions"><button class="btn ghost" data-station-tab="memory">← Карточки и скриншоты</button><button class="btn primary" data-station-tab="project">Вспомнить мой проект →</button></div>';}
-if(stationTab==='project'){const good=taskState('s'+stationIndex,s.task).correct;const checks=s.checks.every((_,j)=>state.checks[stationIndex][j]);html='<h3 class="project-title">'+esc(s.project)+'</h3><p class="project-note">'+esc(s.projectIntro)+'</p>'+checksHTML(stationIndex)+'<label class="field-label" for="station-note">Моя находка или идея для улучшения</label><textarea class="text-field" id="station-note" data-note="'+stationIndex+'" rows="3" placeholder="Что ты придумал, исправил или хочешь попробовать?">'+esc(state.notes[stationIndex])+'</textarea><div class="project-status">'+(good?'✓ Задание станции решено.':'○ Сначала реши задание во вкладке «Разобраться».')+' '+(checks?'✓ Проверка проекта отмечена.':'Отметь то, что проверил в своём проекте. Если чего-то пока нет, вернись к нему в программе.')+'</div><div class="task-actions"><button class="btn accent" data-finish-station '+(good&&checks?'':'disabled')+'>'+(state.done[stationIndex]?'Сигнал уже получен ✓':'Забрать сигнал станции ✦')+'</button><button class="btn ghost" data-station-tab="practice">К заданию</button></div>';}
+if(stationTab==='project'){const good=taskState('s'+stationIndex,s.task).correct;html='<h3 class="project-title">'+esc(s.project)+'</h3>'+projectRecapHTML(stationIndex)+'<label class="field-label" for="station-note">Моя находка или идея для улучшения</label><textarea class="text-field" id="station-note" data-note="'+stationIndex+'" rows="3" placeholder="Что ты придумал, исправил или хочешь попробовать?">'+esc(state.notes[stationIndex])+'</textarea><div class="project-status">'+(good?'✓ Задание станции решено. Можно забрать сигнал и продолжить путь.':'Сначала реши задание во вкладке «Разобраться», затем возвращайся за сигналом.')+'</div><div class="task-actions"><button class="btn accent" data-finish-station '+(good?'':'disabled')+'>'+(state.done[stationIndex]?'Сигнал уже получен ✓':'Забрать сигнал станции ✦')+'</button><button class="btn ghost" data-station-tab="practice">К заданию</button></div>';}
 document.getElementById('station-content').innerHTML=html;}
 function questionType(q){return {single:'Один ответ',multi:'Несколько ответов',match:'Перетаскивание · соответствие',order:'Перетаскивание · порядок',cloze:'Заполни пропуск',text:'Короткий ответ',grid:'Пиксельная задача'}[q.type]||'Задание';}
 function taskHTML(key,q){const s=taskState(key,q);let a='';const mark='АБВГДЕЖЗИК';
@@ -54,20 +229,20 @@ function renderQuizSidebar(){const e=document.getElementById('quiz-sidebar');if(
 function renderQuiz(){if(state.quizIndex<0||state.quizIndex>=D.quiz.length)state.quizIndex=0;let panel='';if(state.quizEnd){const n=score();panel='<div class="task-box"><div class="eyebrow">Результат испытания</div><h2 style="font-size:37px;margin:19px 0">'+n+' / 8 сигналов знаний</h2><p>'+(n===8?'Все задачи решены. Ты разобрался с важными идеями модуля.':'Портал почти настроен. Вернись к нерешённым задачам: пояснения помогут найти причину ошибки.')+'</p><div class="task-actions">'+(n<8?'<button class="btn primary" data-retry>Разобрать нерешённое →</button>':'<button class="btn primary" data-view="journal">Сохранить мой журнал <span class="out-arrow" aria-hidden="true"></span></button>')+'<button class="btn ghost" data-view="route">К карте маршрута</button></div></div>'+(complete()?completionHTML():'<p class="checkpoint-note">'+(state.done.every(Boolean)?'Все станции пройдены. Осталось настроить сигналы знаний.':'Собери сигналы четырёх станций: задания + проверка своих проектов.')+'</p>');}else{const i=state.quizIndex;panel='<div class="task-shell" data-task-key="q'+i+'">'+taskHTML('q'+i,D.quiz[i])+'</div><div class="quiz-pagination"><button class="btn ghost" data-quiz-prev '+(i===0?'disabled':'')+'>← Назад</button><button class="btn" data-quiz-next>'+(i===D.quiz.length-1?'Результат испытания <span class="out-arrow" aria-hidden="true"></span>':'Следующее задание →')+'</button></div>';}
 document.getElementById('view-quiz').innerHTML='<div class="section-title"><div><div class="eyebrow">Проверка знаний всего модуля</div><h2 style="margin-top:10px">Испытание портала</h2><p>Без таймера. Пробуй, проверяй и возвращайся к сложному.</p></div></div><div class="quiz-layout">'+quizSidebar()+'<div class="quiz-panel">'+panel+'</div></div>';updateStats();}
 function completionHTML(){return '<div class="completion-card"><div class="eyebrow">Экспедиция завершена</div><h3 style="margin-top:16px">'+esc(D.finishTitle)+'</h3><p>'+esc(D.finishText)+'</p><div class="task-actions"><button class="btn primary" data-export>Скачать журнал экспедиции <span class="out-arrow" aria-hidden="true"></span></button><a class="btn ghost" href="../">К другим экспедициям →</a></div></div>';}
-function renderJournal(){document.getElementById('view-journal').innerHTML='<div class="section-title"><div><div class="eyebrow">Твоё портфолио модуля '+D.id+'</div><h2 style="margin-top:10px">Бортовой журнал</h2><p>Отмечай только то, что проверил в своей работе. Галочки сохраняются автоматически.</p></div></div><div class="journal-layout"><div class="journal-cards">'+D.stations.map((s,i)=>'<article class="journal-card"><div class="station-index">'+s.lesson+' · '+(state.done[i]?'СИГНАЛ ПОЛУЧЕН':'ПРОВЕРКА ПРОЕКТА')+'</div><h3>'+esc(s.project)+'</h3><p>'+esc(s.projectIntro)+'</p>'+checksHTML(i)+'<textarea class="text-field" rows="2" data-note="'+i+'" aria-label="Моя заметка к проекту '+esc(s.project)+'" placeholder="Моя находка или идея для улучшения">'+esc(state.notes[i])+'</textarea><div class="task-actions"><button class="btn small ghost" data-station="'+i+'">Открыть станцию <span class="out-arrow" aria-hidden="true"></span></button></div></article>').join('')+'<article class="journal-card"><h3>Что беру с собой дальше</h3><label class="field-label" for="explorer-name">Как подписать мой журнал? Необязательно</label><input class="text-field" id="explorer-name" data-name value="'+esc(state.name)+'" placeholder="Имя или позывной"><label class="field-label" for="reflection">Самое полезное открытие модуля</label><textarea class="text-field" id="reflection" data-reflection rows="3" placeholder="Теперь я умею… В следующем проекте попробую…">'+esc(state.reflection)+'</textarea></article></div><aside class="journal-aside"><div class="eyebrow">Сохранить открытия</div><h3 style="margin-top:16px">Твой маршрут уже имеет значение</h3><p>Станции: <strong data-done-count>0</strong> / 4<br>Задачи: <strong data-score-count>0</strong> / 8</p><p>Скачай журнал с галочками, заметками и результатом испытания. Его можно открыть и распечатать.</p><button class="btn primary" data-export>Скачать мой журнал <span class="out-arrow" aria-hidden="true"></span></button><p style="font-size:12px">Заметки остаются у тебя. Сайт никому их не отправляет.</p></aside></div>'+(complete()?completionHTML():'');updateStats();}
+function renderJournal(){document.getElementById('view-journal').innerHTML='<div class="section-title"><div><div class="eyebrow">Твоё портфолио модуля '+D.id+'</div><h2 style="margin-top:10px">Бортовой журнал</h2><p>Вспомни свой путь: какие проекты мы создали и как они работали. В конце отметь, чему научился за весь модуль.</p></div></div><div class="journal-layout"><div class="journal-cards">'+D.stations.map((s,i)=>'<article class="journal-card project-journal-card"><div class="station-index">'+esc(s.lesson)+' · ПРОЕКТ 0'+(i+1)+'</div><h3>'+esc(s.project)+'</h3>'+projectRecapHTML(i)+'<label class="field-label" for="journal-note-'+i+'">Моя находка или идея. Необязательно</label><textarea class="text-field" id="journal-note-'+i+'" rows="2" data-note="'+i+'" placeholder="Что запомнилось в этом проекте?">'+esc(state.notes[i])+'</textarea><div class="task-actions"><button class="btn small ghost" data-station="'+i+'">Вернуться на станцию <span class="out-arrow" aria-hidden="true"></span></button></div></article>').join('')+'<article class="journal-card journal-reflection"><h3>Что беру с собой дальше</h3><label class="field-label" for="explorer-name">Как подписать мой журнал? Необязательно</label><input class="text-field" id="explorer-name" data-name value="'+esc(state.name)+'" placeholder="Имя или позывной"><label class="field-label" for="reflection">Самое полезное открытие модуля</label><textarea class="text-field" id="reflection" data-reflection rows="3" placeholder="Теперь я умею… В следующем проекте попробую…">'+esc(state.reflection)+'</textarea></article><article class="journal-card skills-card"><div class="eyebrow">Итоги всего модуля</div><h3>Чему я научился за модуль</h3><p>Отметь навыки, которые уже получаются. К остальным можно вернуться позже. Галочки сохраняются автоматически.</p>'+skillsHTML()+'</article></div><aside class="journal-aside"><div class="eyebrow">Сохранить открытия</div><h3 style="margin-top:16px">Твой путь в одном журнале</h3><p>Станции: <strong data-done-count>0</strong> / 4<br>Задачи: <strong data-score-count>0</strong> / 8</p><p>Скачай проекты со скриншотами, свои заметки и итоговый список навыков. Журнал можно открыть и распечатать.</p><button class="btn primary" data-export>Скачать мой журнал <span class="out-arrow" aria-hidden="true"></span></button><p style="font-size:12px">Заметки остаются у тебя. Сайт никому их не отправляет.</p></aside></div>'+(complete()?completionHTML():'');updateStats();}
 function announce(t){document.getElementById('live-region').textContent=t;}
 function toast(t){const e=document.getElementById('toast');e.textContent=t;e.hidden=false;window.setTimeout(()=>e.hidden=true,3000);}
 function closeStation(){dialog.close();renderView(false);if(focusBeforeDialog&&focusBeforeDialog.isConnected)focusBeforeDialog.focus({preventScroll:true});}
-function exportJournal(){const name=state.name.trim()||'Исследователь';const body='<h1>'+esc(D.title)+'</h1><p>Креайтивика · IT Start · Модуль '+D.id+'</p><h2>'+esc(name)+'</h2><p>Станций пройдено: '+state.done.filter(Boolean).length+' / 4. Задач решено: '+score()+' / 8.</p>'+D.stations.map((s,i)=>'<section><h2>'+esc(s.lesson)+'. '+esc(s.project)+'</h2><ul>'+s.checks.map((t,j)=>'<li>'+(state.checks[i][j]?'✓':'○')+' '+esc(t)+'</li>').join('')+'</ul><p><strong>Моя заметка:</strong> '+esc(state.notes[i]||'Пока без заметки.')+'</p></section>').join('')+'<section><h2>Моё главное открытие</h2><p>'+esc(state.reflection||'Пока без заметки.')+'</p></section><section><h2>Испытание портала</h2><ol>'+D.quiz.map((q,i)=>'<li>'+esc(q.title||q.prompt)+' - '+(taskState('q'+i,q).correct?'решено':'ещё можно разобрать')+'</li>').join('')+'</ol></section><p><button onclick="window.print()">Распечатать журнал</button></p>';const html='<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Журнал экспедиции '+D.id+'</title><style>body{font:17px/1.7 Segoe UI,Arial,sans-serif;max-width:850px;padding:35px 22px;margin:auto;color:#28312e;background:#fffef9}h1{font-size:40px;line-height:1.15}h2{line-height:1.3}section{border-top:1px solid #d6dfc8;padding-top:15px;margin-top:25px;break-inside:avoid}button{padding:12px 18px;background:#b8d969;border:0;border-radius:10px;font:inherit;cursor:pointer}@media print{button{display:none}body{padding:0;font-size:12px}}</style>'+body+'</html>';const url=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='IT_Start_M'+D.id+'_journal.html';document.body.appendChild(a);a.click();a.remove();window.setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Журнал подготовлен для скачивания');}
+function exportJournal(){const name=state.name.trim()||'Исследователь';const body='<h1>'+esc(D.title)+'</h1><p>Креайтивика · IT Start · Модуль '+D.id+'</p><h2>'+esc(name)+'</h2><p>Станций пройдено: '+state.done.filter(Boolean).length+' / 4. Задач решено: '+score()+' / 8.</p>'+D.stations.map((s,i)=>{const p=J.projects[i],im=s.images[p.image];return '<section class="project-export"><h2>'+esc(s.lesson)+'. '+esc(s.project)+'</h2><p>'+esc(p.intro)+'</p><figure><img src="'+esc(im.src)+'" alt="'+esc(im.alt)+'"><figcaption>Фрагмент из методички: '+esc(im.caption||im.alt)+'</figcaption></figure>'+recapListHTML(i)+'<p><strong>Моя заметка:</strong> '+esc(state.notes[i]||'Пока без заметки.')+'</p></section>';}).join('')+'<section><h2>Моё главное открытие</h2><p>'+esc(state.reflection||'Пока без заметки.')+'</p></section><section><h2>Испытание портала</h2><ol>'+D.quiz.map((q,i)=>'<li>'+esc(q.title||q.prompt)+' - '+(taskState('q'+i,q).correct?'решено':'ещё можно разобрать')+'</li>').join('')+'</ol></section><section><h2>Чему я научился за модуль</h2><ul class="skills-list">'+J.skills.map((text,j)=>'<li><label><input type="checkbox" '+(state.skills[j]?'checked':'')+'> <span>'+esc(text)+'</span></label></li>').join('')+'</ul></section><p><button onclick="window.print()">Распечатать журнал</button></p>';const html='<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Журнал экспедиции '+D.id+'</title><style>body{font:17px/1.7 Segoe UI,Arial,sans-serif;max-width:850px;padding:35px 22px;margin:auto;color:#202520;background:#fffef9}h1{font-size:40px;line-height:1.15}h2{line-height:1.3}section{border-top:1px solid #d6dfc8;padding-top:15px;margin-top:25px;break-inside:avoid}figure{margin:20px 0}figure img{display:block;max-width:100%;max-height:280px;object-fit:contain;object-position:left}figcaption{font-size:12px;color:#596254;margin-top:7px}.project-recap-list{list-style:disc;padding-left:22px;color:#171b17}.project-recap-list li{margin:8px 0}.skills-list{list-style:none;padding:0}.skills-list li{margin:12px 0}.skills-list label{display:flex;align-items:flex-start;gap:10px}.skills-list input{width:18px;height:18px;margin:6px 0 0;flex-shrink:0;accent-color:#698d31}button{padding:12px 18px;background:#b8d969;border:0;border-radius:10px;font:inherit;cursor:pointer}@media print{button{display:none}body{padding:0;font-size:12px}figure img{max-height:180px}h1{font-size:30px}}</style>'+body+'</html>';const url=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='IT_Start_M'+D.id+'_journal.html';document.body.appendChild(a);a.click();a.remove();window.setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Журнал подготовлен для скачивания');}
 document.addEventListener('click',e=>{const b=e.target.closest('button,a');if(!b)return;
 if(b.hasAttribute('data-view')){changeView(b.dataset.view);return;}
 if(b.hasAttribute('data-start')){view='route';renderView(true);openStation(state.done.findIndex(x=>!x)===-1?0:state.done.findIndex(x=>!x));return;}
 if(b.hasAttribute('data-station')){openStation(Number(b.dataset.station));return;}
 if(b.hasAttribute('data-close')){closeStation();return;}
 if(b.hasAttribute('data-station-tab')){stationTab=b.dataset.stationTab;renderStation();dialog.scrollTop=0;return;}
-if(b.hasAttribute('data-image')){const im=D.stations[stationIndex].images[Number(b.dataset.image)];document.getElementById('zoom-image').src=im.src;document.getElementById('zoom-image').alt=im.alt;document.getElementById('image-caption').textContent=im.caption||im.alt;zoom.showModal();return;}
+if(b.hasAttribute('data-image')){const i=b.hasAttribute('data-image-station')?Number(b.dataset.imageStation):stationIndex;const im=D.stations[i].images[Number(b.dataset.image)];document.getElementById('zoom-image').src=im.src;document.getElementById('zoom-image').alt=im.alt;document.getElementById('image-caption').textContent=im.caption||im.alt;zoom.showModal();return;}
 if(b.hasAttribute('data-image-close')){zoom.close();return;}
-if(b.hasAttribute('data-finish-station')){const s=D.stations[stationIndex];if(taskState('s'+stationIndex,s.task).correct&&s.checks.every((_,j)=>state.checks[stationIndex][j])){state.done[stationIndex]=true;save();closeStation();toast('Сигнал станции получен ✦');}return;}
+if(b.hasAttribute('data-finish-station')){const s=D.stations[stationIndex];if(taskState('s'+stationIndex,s.task).correct){state.done[stationIndex]=true;save();closeStation();toast('Сигнал станции получен ✦');}return;}
 if(b.hasAttribute('data-option-key')){const k=b.dataset.optionKey,q=taskFor(k),s=taskState(k,q),n=Number(b.dataset.optionIndex);if(q.type==='single')s.answer=n;else s.answer=s.answer.includes(n)?s.answer.filter(x=>x!==n):s.answer.concat(n);changed(k);return;}
 if(b.hasAttribute('data-check-task')){checkTask(b.dataset.checkTask);return;}
 if(b.hasAttribute('data-hint-task')){const k=b.dataset.hintTask,s=taskState(k,taskFor(k));s.hint=!s.hint;save();replaceTask(k);return;}
@@ -85,7 +260,7 @@ if(b.hasAttribute('data-reset-cancel')){document.getElementById('reset-panel').h
 if(b.hasAttribute('data-reset-confirm')){try{localStorage.removeItem(KEY);}catch(err){}location.reload();}
 });
 document.addEventListener('change',e=>{const t=e.target;
-if(t.hasAttribute('data-check-station')){const i=Number(t.dataset.checkStation),j=Number(t.dataset.checkIndex);state.checks[i][j]=t.checked;if(!t.checked)state.done[i]=false;save();if(dialog.open&&stationTab==='project')renderStation();else if(view==='journal')renderJournal();return;}
+if(t.hasAttribute('data-skill-index')){state.skills[Number(t.dataset.skillIndex)]=t.checked;t.closest('.checkrow').classList.toggle('checked',t.checked);save();return;}
 if(t.hasAttribute('data-cloze-key')){const k=t.dataset.clozeKey;taskState(k,taskFor(k)).answer=t.value===''?null:Number(t.value);changed(k);}
 });
 document.addEventListener('input',e=>{const t=e.target;if(t.hasAttribute('data-note'))state.notes[Number(t.dataset.note)]=t.value;else if(t.hasAttribute('data-name'))state.name=t.value;else if(t.hasAttribute('data-reflection'))state.reflection=t.value;else if(t.hasAttribute('data-text-key')){const k=t.dataset.textKey,s=taskState(k,taskFor(k));s.answer=t.value;s.checked=false;s.correct=false;}else return;save();});
